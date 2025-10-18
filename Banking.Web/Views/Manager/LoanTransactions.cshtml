@@ -1,0 +1,11 @@
+﻿@model IEnumerable<BankingAppDataAccess.LoanTransaction>
+@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    ViewBag.Title = "Loan Transactions";
+}
+
+<div class="container-fluid mt-4">
+    <h3 class="fw-semibold text-primary mb-4">Loan Transactions</h3>
+
+    @Html.Partial("_LoanTransactionPartial", Model)
+</div>

@@ -1,0 +1,62 @@
+﻿@model Banking.Web.Models.CustomerUserModel
+
+@{
+    ViewBag.Title = "Add Customer";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h3 class="fw-semibold text-primary mb-4">Add New Customer</h3>
+
+    @using (Html.BeginForm())
+    {
+        <div class="mb-3">
+            @Html.LabelFor(e => e.Customer.CustomerName, "Customer Name")
+            @Html.TextBoxFor(m => m.Customer.CustomerName, new { @class = "form-control", placeholder = "Enter full name" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.UserLogin.UserName, "User Name")
+            @Html.TextBoxFor(m => m.UserLogin.UserName, new { @class = "form-control", placeholder = "Enter Username" });
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.UserLogin.PasswordHash, "Password")
+            @Html.PasswordFor(m => m.UserLogin.PasswordHash, new { @class = "form-control", placeholder = "Enter Password" });
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.ConfPass, "Confirm Password")
+            @Html.PasswordFor(m => m.ConfPass, new { @class = "form-control", placeholder = "Confirm Password" });
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.Customer.DOB, "Enter Date Of Birth")
+            @Html.TextBoxFor(m => m.Customer.DOB, new { @class = "form-control", placeholder = "Enter DOB", @type = "date" });
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.Customer.PAN, "Enter PAN")
+            @Html.TextBoxFor(m => m.Customer.PAN, new { @class = "form-control", placeholder = "Enter PAN number" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.Customer.Address, "Enter Address")
+            @Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control", placeholder = "Enter Address" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(e => e.Customer.PhoneNumber, "Enter Phone Number")
+            @Html.TextBoxFor(m => m.Customer.PhoneNumber, new { @class = "form-control", placeholder = "Enter Phone Number" })
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Customer</button>
+    }
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info mt-3">@TempData["Message"]</div>
+    }
+</div>
+
+

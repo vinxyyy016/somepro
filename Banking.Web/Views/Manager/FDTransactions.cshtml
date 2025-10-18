@@ -1,0 +1,10 @@
+﻿@model IEnumerable<BankingAppDataAccess.FixedDepositTransaction>
+@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    ViewBag.Title = "FD Transactions";
+}
+<div class="container-fluid mt-4">
+    <h3 class="fw-semibold text-primary mb-4">Fixed Deposit Transactions</h3>
+
+    @Html.Partial("_FDTransactionPartial", Model)
+</div>

@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewBag.Title = "Manager Login";
+}
+
+@using (Html.BeginForm("Login", "Manager", FormMethod.Post))
+{
+    <div class="mb-3">
+        <label class="form-label">Username</label>
+        @Html.TextBox("userName", null, new { @class = "form-control", placeholder = "Enter username" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        @Html.Password("password", null, new { @class = "form-control", placeholder = "Enter password" })
+    </div>
+
+    <button type="submit" class="btn btn-login mt-3">Login</button>
+
+
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3 text-center">@ViewBag.Error</div>
+}

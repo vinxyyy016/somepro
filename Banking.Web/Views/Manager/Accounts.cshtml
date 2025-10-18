@@ -1,0 +1,132 @@
+﻿@model IEnumerable<BankingAppDataAccess.Account>
+@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    ViewBag.Title = "Account Management";
+}
+
+<div class="container-fluid mt-4">
+    <h3 class="fw-semibold text-primary mb-3">Accounts Overview</h3>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("AddAccount", "Manager")" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Open New Account
+        </a>
+    </div>
+
+    <!-- Filter Form -->
+    <form method="get" class="row g-3 mb-3">
+        <div class="col-md-3">
+            <label class="form-label">Account Type</label>
+            <select name="type" class="form-select">
+                <option value="">-- All Types --</option>
+                <option value="SAVING" @(ViewBag.SelectedType == "SAVING" ? "selected" : "")>Saving</option>
+                <option value="FIXED-DEPOSIT" @(ViewBag.SelectedType == "FIXED-DEPOSIT" ? "selected" : "")>Fixed Deposit</option>
+                <option value="LOAN" @(ViewBag.SelectedType == "LOAN" ? "selected" : "")>Loan</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+                <option value="">-- All --</option>
+                <option value="OPEN" @(ViewBag.SelectedStatus == "OPEN" ? "selected" : "")>Open</option>
+                <option value="CLOSED" @(ViewBag.SelectedStatus == "CLOSED" ? "selected" : "")>Closed</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Customer</label>
+            @Html.DropDownList("customerId", (SelectList)ViewBag.CustomerList, "-- All Customers --", new { @class = "form-select" })
+        </div>
+
+        <div class="col-md-3 align-self-end">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-filter"></i> Apply Filter
+            </button>
+        </div>
+    </form>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover align-middle shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Account ID</th>
+                    <th>Customer ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Opened By</th>
+                    <th>Open Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var acc in Model)
+                {
+                    <tr>
+                        <td>@acc.AccountID</td>
+                        <td>@acc.CustomerID</td>
+                        <td>@acc.AccountType</td>
+                        <td>
+                            @if (acc.Status == "OPEN")
+                            {
+                                <span class="badge bg-success">OPEN</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">CLOSED</span>
+                            }
+                        </td>
+                        <td>@acc.OpenedBy</td>
+                        <td>@acc.OpenDate.ToShortDateString()</td>
+                        <td>
+                            @if (acc.Status == "OPEN")
+                            {
+                                using (Html.BeginForm("CloseAccount", "Manager", FormMethod.Post))
+                                {
+                                    @Html.Hidden("accountId", acc.AccountID)
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Close this account?');">
+                                        <i class="bi bi-x-circle"></i> Close
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">Closed</span>
+                            }
+                            @if (acc.AccountType == "SAVING")
+                            {
+                                <a href="@Url.Action("SavingsTransactions", "Manager", new { accountId = acc.AccountID })"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-arrow-left-right"></i> Saving Tx
+                                </a>}
+                            else if (acc.AccountType == "FIXED-DEPOSIT")
+                            {
+                                <a href="@Url.Action("FDTransactions", "Manager", new { fdId = acc.AccountID })" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-list"></i> FD Tx
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoanTransactions", "Manager", new { lnId = acc.AccountID })"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-cash"></i> Loan Tx
+                                </a>
+                            }
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No accounts found.</div>
+    }
+</div>

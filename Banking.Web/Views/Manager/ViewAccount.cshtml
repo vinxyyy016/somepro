@@ -1,0 +1,38 @@
+﻿@model BankingAppDomain.Models.CustomerAccountViewModel
+@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    ViewBag.Title = "Account Details";
+}
+
+<div class="container-fluid mt-4">
+    <h4 class="fw-semibold text-primary">
+        Accounts of @Model.CustomerName (@Model.CustomerId)
+    </h4>
+
+    <hr />
+
+    @if (Model.Accounts.Any())
+    {
+        <h5 class="text-secondary mt-4">All Accounts</h5>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr><th>Account ID</th><th>Type</th><th>Status</th><th>Open Date</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model.Accounts)
+                {
+                    <tr>
+                        <td>@a.AccountID</td>
+                        <td>@a.AccountType</td>
+                        <td>@a.Status</td>
+                        <td>@a.OpenDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No accounts found.</div>
+    }
+</div>

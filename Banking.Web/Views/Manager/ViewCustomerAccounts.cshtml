@@ -1,0 +1,105 @@
+﻿@model BankingAppDomain.Models.CustomerAccountViewModel
+@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    ViewBag.Title = "Customer Accounts";
+}
+
+<div class="container-fluid mt-4">
+    <h4 class="fw-semibold text-primary">
+        Accounts of @Model.CustomerName (@Model.CustomerId)
+    </h4>
+
+    <hr />
+
+    @if (Model.Accounts.Count == 0 && Model.Savings.Count == 0 && Model.FDs.Count == 0 && Model.Loans.Count == 0)
+    {
+        <div class="alert alert-info">No accounts found for this customer.</div>
+    }
+    else
+    {
+        <h5 class="mt-4 text-secondary">General Accounts</h5>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Account ID</th>
+                    <th>Type</th>
+                    <th>Open Date</th>
+                    <th>Status</th>
+                    <th>Closed Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var acc in Model.Accounts)
+                {
+                    <tr>
+                        <td>@acc.AccountID</td>
+                        <td>@acc.AccountType</td>
+                        <td>@acc.OpenDate.ToShortDateString()</td>
+                        <td>@acc.Status</td>
+                        <td>@acc.ClosedDate?.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        if (Model.Savings.Any())
+        {
+            <h5 class="mt-4 text-secondary">Savings Accounts</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr><th>SBAccount ID</th><th>Balance</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model.Savings)
+                    {
+                        <tr><td>@s.SBAccountID</td><td>@s.Balance</td></tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        if (Model.FDs.Any())
+        {
+            <h5 class="mt-4 text-secondary">Fixed Deposit Accounts</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr><th>FDAccount ID</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>ROI</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var f in Model.FDs)
+                    {
+                        <tr>
+                            <td>@f.FDAccountID</td>
+                            <td>@f.StartDate.ToShortDateString()</td>
+                            <td>@f.EndDate.ToShortDateString()</td>
+                            <td>@f.Amount</td>
+                            <td>@f.FD_ROI%</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        if (Model.Loans.Any())
+        {
+            <h5 class="mt-4 text-secondary">Loan Accounts</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr><th>LNAccount ID</th><th>Amount</th><th>Start Date</th><th>Tenure</th><th>ROI</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var l in Model.Loans)
+                    {
+                        <tr>
+                            <td>@l.LNAccountID</td>
+                            <td>@l.LoanAmount</td>
+                            <td>@l.StartDate.ToShortDateString()</td>
+                            <td>@l.TenureMonths months</td>
+                            <td>@l.LN_ROI%</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BankingAppDataAccess.SavingsTransaction>
+@{
+    Layout = null;
+}
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3 text-primary">Savings Transactions</h5>
+
+    <!-- Display messages -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    <!-- Form for Deposit / Withdraw -->
+    @if (ViewBag.CanAddTransaction == true)
+    {
+        using (Html.BeginForm("AddSavingsTransaction", "Manager", FormMethod.Post))
+        {
+            <input type="hidden" name="accountId" value="@ViewBag.AccountId" />
+            
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Transaction Type</label>
+                    <select name="transactionType" class="form-select" required>
+                        <option value="DEPOSIT">Deposit</option>
+                        <option value="WITHDRAW">Withdraw</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Amount (₹)</label>
+                    <input name="amount" type="number" step="0.01" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle"></i> Submit
+                    </button>
+                </div>
+            </div>
+        }
+    }
+
+    <hr />
+
+    <!-- Transactions Table -->
+    <h6 class="text-secondary mt-3">Transaction History</h6>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover align-middle mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th>Txn ID</th>
+                    <th>Type</th>
+                    <th>Amount (₹)</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td>@t.TransactionID</td>
+                        <td>@t.TransactionType</td>
+                        <td>@t.Amount</td>
+                        <td>@t.TransactionDate.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">No transactions yet for this account.</div>
+    }
+</div>

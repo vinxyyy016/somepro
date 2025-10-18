@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BankingAppDataAccess.LoanTransaction>
+@{
+    Layout = null;
+}
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3 text-primary">Loan Transactions</h5>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    @if (ViewBag.CanAddTransaction == true)
+    {
+        using (Html.BeginForm("AddLoanPayment", "Transaction", FormMethod.Post))
+        {
+            <input type="hidden" name="lnId" value="@ViewBag.AccountId" />
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label">Payment Amount (₹)</label>
+                    <input type="number" name="amount" step="0.01" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-cash-coin"></i> Pay EMI
+                    </button>
+                </div>
+            </div>
+        }
+    }
+
+    <hr />
+    <h6 class="text-secondary">Payment History</h6>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Amount Paid</th>
+                    
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td>@t.TransactionID</td>
+                        <td>₹@t.Amount</td>
+                       
+                        <td>@t.TransactionDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No loan payments yet.</div>
+    }
+</div>

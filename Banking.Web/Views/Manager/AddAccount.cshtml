@@ -1,0 +1,96 @@
+﻿@model BankingAppDomain.Models.AccountTypeModel
+@{
+    ViewBag.Title = "AddAccount";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <h3 class="fw-semibold text-primary mb-4">Open New Account</h3>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        <div class="mb-3">
+            <label class="form-label">Customer</label>
+            @Html.DropDownListFor(m => m.Account.CustomerID,
+                (SelectList)ViewBag.CustomerList,
+                "-- Select Active Customer --",
+                new { @class = "form-select" })
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Account Type</label>
+            @Html.DropDownListFor(m => m.Account.AccountType,
+                new SelectList(new[] { "SAVING", "FIXED-DEPOSIT", "LOAN" }),
+                "-- Select Type --",
+                new { @class = "form-select", id = "acctType" })
+        </div>
+
+        <div id="savingFields" class="type-fields mb-3">
+            <label class="form-label">Opening Balance (₹)</label>
+            @Html.TextBoxFor(m => m.savings.Balance, new { @class = "form-control", type = "number" })
+        </div>
+
+        <div id="fdFields" class="type-fields mb-3" style="display:none;">
+            <label class="form-label">FD Amount (₹)</label>
+            @Html.TextBoxFor(m => m.fixeddep.Amount, new { @class = "form-control", type = "number" })
+            <label class="form-label mt-2">Start Date</label>
+            @Html.TextBoxFor(m => m.fixeddep.StartDate, new { @class = "form-control", type = "date" })
+            <label class="form-label mt-2">End Date</label>
+            @Html.TextBoxFor(m => m.fixeddep.EndDate, new { @class = "form-control", type = "date" })
+            <label class="form-label mt-2">Interest Rate (%)</label>
+            @Html.TextBoxFor(m => m.fixeddep.FD_ROI, new { @class = "form-control", type = "number" })
+        </div>
+
+        <div id="loanFields" class="type-fields mb-3" style="display:none;">
+            <label class="form-label">Loan Amount (₹)</label>
+            @Html.TextBoxFor(m => m.loan.LoanAmount, new { @class = "form-control", type = "number", id = "LoanAmount" })
+            <label class="form-label mt-2">Start Date</label>
+            @Html.TextBoxFor(m => m.loan.StartDate, new { @class = "form-control", type = "date" })
+            <label class="form-label mt-2">Tenure (Months)</label>
+            @Html.TextBoxFor(m => m.loan.TenureMonths, new { @class = "form-control", type = "number" })
+            <label class="form-label mt-2">Interest Rate (%)</label>
+            @Html.TextBoxFor(m => m.loan.LN_ROI, new { @class = "form-control", type = "number", id = "LN_ROI", @readonly = "readonly" })
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Create Account</button>
+    }
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const select = document.getElementById('acctType');
+    select.addEventListener('change', function () {
+        document.querySelectorAll('.type-fields').forEach(x => x.style.display = 'none');
+        if (this.value === 'SAVING') document.getElementById('savingFields').style.display = 'block';
+        if (this.value === 'FIXED-DEPOSIT') document.getElementById('fdFields').style.display = 'block';
+        if (this.value === 'LOAN') document.getElementById('loanFields').style.display = 'block';
+    });
+
+    $(document).ready(function () {
+        $('#LoanAmount').on('input', function () {
+            var amount = parseFloat($(this).val());
+            var interestRate = 0;
+
+            if (!isNaN(amount)) {
+                if (amount <= 500000) {
+                    interestRate = 10;
+                } else if (amount > 500000 && amount <= 1000000) {
+                    interestRate = 9.5;
+                } else if (amount > 1000000) {
+                    interestRate = 9;
+                }
+            }
+
+            $('#LN_ROI').val(interestRate);
+        });
+    });
+
+</script>
+
+

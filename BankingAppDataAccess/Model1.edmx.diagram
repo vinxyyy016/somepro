@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9ce6b61b4f6446348516a7d4be40c243" Name="Diagram1">
+        <EntityTypeShape EntityType="BANKINGModel.Account" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.Customer" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.Department" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.Employee" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.FixedDepositAccount" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.FixedDepositTransaction" Width="1.5" PointX="7.5" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.LoanAccount" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.LoanTransaction" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.Manager" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.SavingsAccount" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.SavingsTransaction" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANKINGModel.UserLogin" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="BANKINGModel.FK__Account__Custome__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__FixedDepo__FDAcc__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__LoanAccou__LNAcc__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__SavingsAc__SBAcc__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__FixedDepo__Custo__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__LoanAccou__Custo__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__SavingsAc__Custo__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__Employee__Depart__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__FixedDepo__FDAcc__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__LoanTrans__LNAcc__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="BANKINGModel.FK__SavingsTr__SBAcc__70DDC3D8" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
